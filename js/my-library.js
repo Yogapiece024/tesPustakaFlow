@@ -153,18 +153,33 @@ document.addEventListener('DOMContentLoaded', () => {
             const title  = document.getElementById('bookTitle').value.trim() || 'Untitled Book';
             const author = document.getElementById('bookAuthor').value.trim() || 'Unknown Author';
             const serial = `USR-${Math.floor(10000 + Math.random() * 90000)}`;
+            const coverInput = document.getElementById('bookCoverInput');
+            
+            const file = coverInput && coverInput.files[0];
+            
+            const saveAndRender = (coverPathData) => {
+                const newBook = { title, author, serial, cover_path: coverPathData || "" };
+                const books = getUploadedBooks();
+                books.push(newBook);
+                saveUploadedBooks(books);
 
-            const newBook = { title, author, serial };
-            const books = getUploadedBooks();
-            books.push(newBook);
-            saveUploadedBooks(books);
+                // Render ulang isi grid
+                renderUploadedBooks();
 
-            // Render ulang isi grid
-            renderUploadedBooks();
+                // Reset form dan tutup modal
+                addBookForm.reset();
+                modal && modal.classList.add('hidden');
+            };
 
-            // Reset form dan tutup modal
-            addBookForm.reset();
-            modal && modal.classList.add('hidden');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    saveAndRender(event.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveAndRender("");
+            }
         });
     }
 });

@@ -81,7 +81,9 @@ async function processScannedCode(barcode) {
             return;
         }
 
-        const books = await response.json();
+        const defaultBooks = await response.json();
+        const customBooks = JSON.parse(localStorage.getItem('pustakaflow_custom_books') || '[]');
+        const books = [...defaultBooks, ...customBooks];
         
         // Normalize barcode to avoid spacing/case issues
         const normalizedBarcode = barcode.trim().toUpperCase();
@@ -105,7 +107,7 @@ async function processScannedCode(barcode) {
         showSuccessState(book, barcode);
     } catch (err) {
         console.error("Fetch error:", err);
-        showErrorState("Gagal memeriksa status buku. Pastikan file books.json tersedia.", barcode);
+        showErrorState("Gagal memeriksa status buku. Pastikan database buku tersedia.", barcode);
     }
 }
 
