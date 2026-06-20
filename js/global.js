@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameElements = document.querySelectorAll('span.text-sm.font-medium.text-gray-300');
         nameElements.forEach(el => {
             if (el.innerText.includes('(Member)')) {
-                el.innerText = \`\${newName || 'Asep'} (Member)\`;
+                el.innerText = `${newName || 'Asep'} (Member)`;
             }
         });
 
