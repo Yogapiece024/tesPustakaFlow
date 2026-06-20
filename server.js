@@ -15,9 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
 // --- TAMBAHAN PINTU MASUK FRONTEND ---
-// Jika membuka halaman utama web, arahkan ke login.html
+// Jika membuka halaman utama web, arahkan ke index.html
 app.get('/', (req, res) => {
-  res.redirect('/login.html');
+  res.redirect('/index.html');
 });
 
 // Menangani navigasi antar halaman HTML lainnya (misal /catalog.html)
